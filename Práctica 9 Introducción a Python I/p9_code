@@ -1,0 +1,107 @@
+# Estructura de datos y algoritmos I
+# Práctica 9 -> Python I
+# Equipo 7
+
+
+def descripcion_programa():
+    print("PROGRAMA PARA CALCULAR EL TIEMPO TRANSCURRIDO ENTRE DOS FECHAS\n\n  Este programa calcula el tiempo \
+transcurrido entre dos fechas. La fecha límite inferior aceptada por el programa es el 1 de enero del año 1 dC \
+a las 00:00:00. Y no hay fecha límite superior como tal.")
+  
+
+
+def leer_fecha_y_calcular_segundos():
+    lista_de_meses = {"enero" : [31, 0], "febrero" : [29, 2678400], "marzo" : [31, 5097600],
+                      "abril" : [30, 7776000], "mayo" : [31, 10368000], "junio" : [30, 13046400],
+                      "julio" : [31, 15638400], "agosto" : [31, 18316800], "septiembre" : [30, 20995200],
+                      "octubre" : [31, 23587200], "noviembre" : [30, 26265600], "diciembre" : [31, 28857600]}
+    
+    año = int(input("  Ingrese un año: "))
+    while (año < 1):
+        año = int(input("  Error. Ingrese un año válido: "))
+    
+    total_segundos = 31536000 * (año - 1)
+    total_segundos += 86400 * ( int((año - 1) / 4) - int((año - 1) / 100) + int((año - 1) / 400) )
+
+  
+    mes = input("  Ingrese el nombre de un mes (en minúsculas): ")
+    while (not mes in lista_de_meses):
+        mes = input("  Error. Ingrese un nombre de un mes (en minúsculas): ")
+    
+    if (mes == "enero") or (mes == "febrero"):
+        total_segundos += lista_de_meses[mes][1]
+    elif ((año % 4 == 0 and año % 100 != 0) or (año % 400 == 0 and año % 100 == 0)):
+        total_segundos += lista_de_meses[mes][1] + 86400
+    else:
+        total_segundos += lista_de_meses[mes][1]
+  
+  
+    dia = int(input("  Ingrese un día: "))
+    while (dia < 1) or (dia > lista_de_meses[mes][0]) or \
+    (mes == "febrero" and dia == 29 and (not((año % 4 == 0 and año % 100 != 0) or (año % 400 == 0 and año % 100 == 0)))):
+        dia = int(input("  Error. Ingrese un dia válido: "))
+    
+    total_segundos += (dia - 1) * 86400
+  
+  
+    hora = int(input("  Ingrese una hora: "))
+    while (hora < 0) or (hora > 23):
+        hora = int(input("  Error. Ingrese una hora válida: "))
+    
+    total_segundos += hora * 3600
+  
+  
+    minuto = int(input("  Ingrese un minuto: "))
+    while (minuto < 0) or (minuto > 59):
+        minuto = int(input("  Error. Ingrese un minuto válido: "))
+    
+    total_segundos += minuto * 60
+  
+  
+    seg = int(input("  Ingrese un segundo: "))
+    while (seg < 0) or (seg > 59):
+        seg = int(input("  Error. Ingrese un segundo válido: "))
+    
+    total_segundos += seg
+  
+    return total_segundos
+  
+  
+  
+def imprimir_resultados(dif_seg):
+    dif_dias = int(((dif_seg / 86400)
+    dif_horas = int(((dif_seg % 86400) / 3600)
+    dif_minutos = int((dif_seg % 3600) / 60)
+    dif_segundos = dif_seg % 60
+    
+    print("\nTiempo transcurrido: ")
+    print(dif_dias, " días, ", dif_horas, " horas, ", dif_minutos, " minutos, ", dif_segundos, " segundos.")
+
+    dif_horas = int((dif_seg / 60) / 60)
+    print(dif_horas, " horas, ", dif_minutos, " minutos, ", dif_segundos, " segundos.")
+
+    dif_minutos = int(dif_seg / 60)
+    print(dif_minutos, " minutos, ", dif_segundos, " segundos.")
+
+    print(dif_seg, " segundos.")
+
+
+
+descripcion_programa()
+
+while (1):
+    print("\n\nFecha y horario inicial")
+    total_segundos_1 = leer_fecha_y_calcular_segundos()
+  
+    print("\nFecha y horario final")
+    total_segundos_2 = leer_fecha_y_calcular_segundos()
+  
+    diferencia_en_segundos = total_segundos_2 - total_segundos_1
+  
+    imprimir_resultados(diferencia_en_segundos)
+  
+    opcion = int(input("\n¿Desea hacer otro cálculo? (1. Si  2. No): "))
+    if (opcion == 2):
+        break
+
+print("Programa finalizado con éxito.")
