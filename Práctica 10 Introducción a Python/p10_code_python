@@ -1,0 +1,97 @@
+def agregar(jugadores):
+    nombre = input("\nIngrese el nombre del nuevo jugador: ")
+    
+    if (len(jugadores) == 0):
+        jugadores.append(nombre)
+        return
+    
+    posición = int(input("Ingrese la posición donde colocaremos al jugador: "))
+    while (posición < 1 or posición > len(jugadores) + 1):
+        posición = int(input("Error. Ingrese la posición donde colocaremos al jugador: "))
+    
+    jugadores.insert(posición, nombre)
+
+
+
+def imprimir(jugadores):
+    print("\nJugadores sobrevivientes hasta este punto:")
+    print("   POSICIÓN    JUGADOR")
+    for i in range(1, len(jugadores) + 1):
+        print("    ", i, "         ", jugadores[i - 1])
+
+
+
+def ejecutar_juego(jugadores):
+    posición = int(input("\nIngrese la posición en donde comenzaremos el juego: "))
+    while (posición < 1 or posición > len(jugadores)):
+        posición = int(input("Error. Ingrese la posición en donde comenzaremos el juego: "))
+    
+    salto_aux = int(input("Ingrese el salto que daremos en cada eliminación: "))
+    while (salto_aux == 0):
+        salto_aux = int(input("Error. Ingrese el salto que daremos en cada eliminación: "))
+    
+        
+    if (salto_aux < 0):
+        jugadores.reverse()
+        posición = len(jugadores) - posición
+        salto_aux *= -1
+        opción = -1
+    else:
+        posición -= 1
+        opción = -2
+        
+        
+    for i in range(1, len(jugadores)):
+        if (opción == -1):
+            jugadores.reverse()
+            imprimir(jugadores)
+            jugadores.reverse()
+        else:
+            imprimir(jugadores)
+            
+            
+        if (i == 1):
+            auxiliar = 0
+        else:
+            auxiliar = 1
+            
+            
+        salto = ( salto_aux % len(jugadores) ) - auxiliar
+            
+        posición += salto
+            
+        if (posición > len(jugadores) - 1):
+            posición -= len(jugadores)
+            
+        if (posición < 0):
+            posición += len(jugadores)
+                
+            
+        del(jugadores[posición])
+            
+        
+    print("\nEl sobreviviente es: " + jugadores[0])
+    jugadores.clear()
+
+
+
+print("EL ÚLTIMO SOBREVIVIENTE")
+print("\n")
+
+jugadores = list()
+
+while (0 < 1):
+    print("\nMenú de acciones:\n   1. Agregar jugador\n   2. Comenzar juego.\n   3. Salir del juego.\n")
+    
+    opción = int(input("Elija la opción que desea ejecutar: "))
+    while (opción < 1 or opción > 3):
+        opción = int(input("Error. Elija la opción que desea ejecutar: "))
+    
+    if (opción == 1):
+        agregar(jugadores)
+        
+    elif (opción == 2):
+        ejecutar_juego(jugadores)
+        
+    elif (opción == 3):
+        break
