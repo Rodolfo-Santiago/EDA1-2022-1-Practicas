@@ -74,8 +74,6 @@ int main()
 	struct Datos* info;
 
 	recopilar_datos(&info);
-	
-	printf("info3 = %p\n", info);
 
 	menu_principal(info);
 
@@ -87,7 +85,6 @@ void recopilar_datos(struct Datos** info)
 	*info = (struct Datos*) calloc(1, sizeof(struct Datos));
 
     obtener_cantidad_usuarios(&(**info).cantidad_usuarios);
-	printf("cant = %d\n", (**info).cantidad_usuarios);
 
 	if ((**info).cantidad_usuarios > 0)
 	{
@@ -163,7 +160,7 @@ void menu_principal(struct Datos* info)
     int opcion;
     
     puts("Bienvenido a Blunnet");
-    printf("info4 = %p\n", info);
+    
     while (1)
 	{
 		imprimir_menu_principal();
